@@ -1,12 +1,29 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:todoapp/Models/todo.dart';
+
+import 'todo.dart';
+
+// {
+//   "name": "Iresh Sharma",
+//   "email": "hi",
+//   "tel": "hi",
+//   "todos": [
+//     {
+//       "id": "",
+//       "title": "",
+//       "created_at": 93756389,
+//       "dsec": "",
+//       "completed": true,
+//       "priority": 0
+//     }
+//   ]
+// }
 
 class User {
   final String name;
-  final String email;
-  final int tel;
+  final String? email;
+  final String? tel;
   final List<Todo> todos;
   User({
     required this.name,
@@ -18,7 +35,7 @@ class User {
   User copyWith({
     String? name,
     String? email,
-    int? tel,
+    String? tel,
     List<Todo>? todos,
   }) {
     return User(
@@ -42,7 +59,7 @@ class User {
     return User(
       name: map['name'],
       email: map['email'],
-      tel: map['tel']?.toInt(),
+      tel: map['tel'],
       todos: List<Todo>.from(map['todos']?.map((x) => Todo.fromMap(x))),
     );
   }
@@ -70,5 +87,9 @@ class User {
   @override
   int get hashCode {
     return name.hashCode ^ email.hashCode ^ tel.hashCode ^ todos.hashCode;
+  }
+
+  int get highPriorityCount {
+    return todos.where((x) => x.priority >= 7).length;
   }
 }

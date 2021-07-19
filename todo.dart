@@ -1,14 +1,5 @@
 import 'dart:convert';
 
-// {
-//       "id": "",
-//       "title": "",
-//       "created_at": 93756389,
-//       "dsec": "",
-//       "completed": true,
-//       "priority": 0
-//     }
-
 class Todo {
   final String id;
   final String title;
@@ -77,23 +68,23 @@ class Todo {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is Todo &&
-        other.id == id &&
-        other.title == title &&
-        other.created_at == created_at &&
-        other.dsec == dsec &&
-        other.completed == completed &&
-        other.priority == priority;
+      other.id == id &&
+      other.title == title &&
+      other.created_at == created_at &&
+      other.dsec == dsec &&
+      other.completed == completed &&
+      other.priority == priority;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        title.hashCode ^
-        created_at.hashCode ^
-        dsec.hashCode ^
-        completed.hashCode ^
-        priority.hashCode;
+      title.hashCode ^
+      created_at.hashCode ^
+      dsec.hashCode ^
+      completed.hashCode ^
+      priority.hashCode;
   }
 }

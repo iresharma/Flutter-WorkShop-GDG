@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Models/todo.dart';
 import 'package:todoapp/Models/user.dart';
+import 'package:todoapp/utils/theme.dart';
+import 'package:todoapp/widgets/header.dart';
+import 'package:todoapp/widgets/largeInfoBox.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,53 +22,60 @@ class _HomeState extends State<Home> {
     _user = new User(
         name: 'Jane Doe',
         email: 'iresh.sharma8@gmail.com',
-        tel: 8585858585,
+        tel: "8585858585",
         todos: <Todo>[]);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_user != null) {
-      return Scaffold(
-          backgroundColor: Theme.of(context).accentColor,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Material(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      CupertinoIcons.search,
-                      color: Colors.grey[300],
-                      size: 35,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide:
-                          BorderSide(color: Color(0xfff7f7f7), width: 0.25),
-                    ),
-                    focusColor: Colors.black,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide:
-                            BorderSide(color: Color(0xfff7f7f7), width: 0.25)),
-                    hintText: 'Search Todo',
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                  ),
-                ),
-              ),
-            ),
-          ));
-    } else
-      return Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+    return Scaffold(
+      backgroundColor: ColorTheme.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print('hi'),
+        child: Icon(
+          Icons.add,
+          color: ColorTheme.yellow,
         ),
-      );
+        backgroundColor: ColorTheme.palePurple,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(name: _user.name.split(' ')[0]),
+                Row(
+                  children: [
+                    LargeInfoBox(
+                      text: _user.todos.length.toString(),
+                      secondaryText: 'Todos',
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            ColorTheme.lightPurple,
+                            ColorTheme.palePurple,
+                            ColorTheme.purple
+                          ]),
+                      textColor: ColorTheme.white,
+                    ),
+                    LargeInfoBox(
+                      text: _user.highPriorityCount.toString(),
+                      secondaryText: "High Priority Todos",
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [ColorTheme.yellow, ColorTheme.red]),
+                      textColor: ColorTheme.white,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
