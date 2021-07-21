@@ -4,32 +4,18 @@ import 'package:flutter/foundation.dart';
 
 import 'todo.dart';
 
-// {
-//   "name": "Iresh Sharma",
-//   "email": "hi",
-//   "tel": "hi",
-//   "todos": [
-//     {
-//       "id": "",
-//       "title": "",
-//       "created_at": 93756389,
-//       "dsec": "",
-//       "completed": true,
-//       "priority": 0
-//     }
-//   ]
-// }
-
 class User {
   final String name;
-  final String? email;
-  final String? tel;
+  final String email;
+  final String tel;
   final List<Todo> todos;
+  final List<Todo> completed;
   User({
     required this.name,
     required this.email,
     required this.tel,
     required this.todos,
+    required this.completed,
   });
 
   User copyWith({
@@ -37,12 +23,14 @@ class User {
     String? email,
     String? tel,
     List<Todo>? todos,
+    List<Todo>? completed,
   }) {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
       tel: tel ?? this.tel,
       todos: todos ?? this.todos,
+      completed: completed ?? this.completed,
     );
   }
 
@@ -52,6 +40,7 @@ class User {
       'email': email,
       'tel': tel,
       'todos': todos.map((x) => x.toMap()).toList(),
+      'completed': completed.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -61,6 +50,7 @@ class User {
       email: map['email'],
       tel: map['tel'],
       todos: List<Todo>.from(map['todos']?.map((x) => Todo.fromMap(x))),
+      completed: List<Todo>.from(map['completed']?.map((x) => Todo.fromMap(x))),
     );
   }
 
@@ -70,7 +60,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, tel: $tel, todos: $todos)';
+    return 'User(name: $name, email: $email, tel: $tel, todos: $todos, completed: $completed)';
   }
 
   @override
@@ -81,15 +71,21 @@ class User {
         other.name == name &&
         other.email == email &&
         other.tel == tel &&
-        listEquals(other.todos, todos);
+        listEquals(other.todos, todos) &&
+        listEquals(other.completed, completed);
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^ email.hashCode ^ tel.hashCode ^ todos.hashCode;
+    return name.hashCode ^
+        email.hashCode ^
+        tel.hashCode ^
+        todos.hashCode ^
+        completed.hashCode;
   }
 
+  // integer getter to return the number todos with priority greater than 7
   int get highPriorityCount {
-    return todos.where((x) => x.priority >= 7).length;
+    return todos.where((x) => x.priority > 7).toList().length;
   }
 }
