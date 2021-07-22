@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Models/todo.dart';
 import 'package:todoapp/Models/user.dart';
 import 'package:todoapp/utils/theme.dart';
 import 'package:todoapp/widgets/TodoListTile.dart';
 import 'package:todoapp/widgets/header.dart';
+import 'package:todoapp/widgets/inputModal.dart';
 import 'package:todoapp/widgets/largeInfoBox.dart';
 
 class Home extends StatefulWidget {
@@ -35,7 +37,7 @@ class _HomeState extends State<Home> {
                   desc:
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ",
                   completed: false,
-                  priority: random.nextInt(10),
+                  priority: random.nextInt(10) + 1,
                 )),
         completed: List.generate(
             1,
@@ -46,16 +48,19 @@ class _HomeState extends State<Home> {
                   desc:
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ",
                   completed: true,
-                  priority: random.nextInt(10),
+                  priority: random.nextInt(10) + 1,
                 )));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorTheme.white,
+      // backgroundColor: ColorTheme.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print('hi'),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context, builder: (context) => InputModal());
+        },
         child: Icon(
           Icons.add,
           color: ColorTheme.yellow,
@@ -115,11 +120,35 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(10)),
-                            )
+                            ),
+                            Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(Icons.check,
+                                      size: 45, color: Colors.white),
+                                ),
+                                alignment: Alignment.centerLeft)
+                          ],
+                        ),
+                        secondaryBackground: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(CupertinoIcons.delete,
+                                      size: 35, color: Colors.white),
+                                ),
+                                alignment: Alignment.centerRight)
                           ],
                         ),
                         onDismissed: (direction) => {
-                          if (direction == DismissDirection.startToEnd)
+                          if (direction == DismissDirection.endToStart)
                             setState(() => _user.todos.removeAt(index))
                           else
                             setState(() => {
@@ -144,16 +173,42 @@ class _HomeState extends State<Home> {
                     child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) => Dismissible(
-                        onDismissed: (direction) => {
-                          // if (direction == DismissDirection.startToEnd)
-                          //   setState(() => _user.todos.removeAt(index))
-                          // else
-                          //   setState(() => {
-                          //         _user.todos[index].completed = true,
-                          //         _user.completed.add(_user.todos[index]),
-                          //         _user.todos.removeAt(index)
-                          //       })
-                        },
+                        background: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(CupertinoIcons.delete,
+                                      size: 35, color: Colors.white),
+                                ),
+                                alignment: Alignment.centerLeft)
+                          ],
+                        ),
+                        secondaryBackground: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Align(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(CupertinoIcons.delete,
+                                      size: 35, color: Colors.white),
+                                ),
+                                alignment: Alignment.centerRight)
+                          ],
+                        ),
+                        onDismissed: (direction) =>
+                            setState(() => _user.completed.removeAt(index)),
                         key: Key(_user.completed[index].toString()),
                         child: TodoListTile(todo: _user.completed[index]),
                       ),

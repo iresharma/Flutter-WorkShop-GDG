@@ -1,0 +1,1 @@
+# Folder for JSON files used for lottie

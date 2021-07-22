@@ -24,7 +24,11 @@ class Header extends StatelessWidget {
             ),
             Text(
               'Hope you are having a productive day',
-              style: TextStyle(color: ColorTheme.palePurple, fontSize: 18),
+              style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? ColorTheme.lightPurple
+                      : ColorTheme.purple,
+                  fontSize: 18),
             )
           ],
         ),
