@@ -59,7 +59,10 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              context: context, builder: (context) => InputModal());
+              context: context,
+              builder: (context) => InputModal(
+                    user: _user,
+                  ));
         },
         child: Icon(
           Icons.add,

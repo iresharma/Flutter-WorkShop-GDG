@@ -88,4 +88,8 @@ class User {
   int get highPriorityCount {
     return todos.where((x) => x.priority > 7).toList().length;
   }
+
+  void addTodo(Todo todo) {
+    todos.add(todo);
+  }
 }
