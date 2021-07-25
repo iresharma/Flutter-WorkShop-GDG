@@ -37,7 +37,7 @@ class _InputModalState extends State<InputModal> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => widget.user.addTodo(Todo(
+                    onPressed: () => Navigator.of(context).pop(Todo(
                         id: "sdkjfhs",
                         title: _titleController.text,
                         created_at: DateTime.now().millisecondsSinceEpoch,

@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
     super.initState();
     var random = new Random();
     _user = new User(
-        name: 'Jane Doe',
+        name: 'Iresh Sharma',
         email: 'iresh.sharma8@gmail.com',
         tel: "8585858585",
         todos: List.generate(
@@ -62,7 +62,10 @@ class _HomeState extends State<Home> {
               context: context,
               builder: (context) => InputModal(
                     user: _user,
-                  ));
+                  )).then((value) {
+            print(value);
+            setState(() => _user.todos.add(value));
+          });
         },
         child: Icon(
           Icons.add,
@@ -70,10 +73,10 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: ColorTheme.palePurple,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,7 +115,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Container(
-                    height: 103.0 * _user.todos.length,
+                    height: 107.0 * _user.todos.length,
                     child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) => Dismissible(

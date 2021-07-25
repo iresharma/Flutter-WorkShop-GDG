@@ -15,7 +15,7 @@ class TodoListTile extends StatelessWidget {
       child: Container(
         height: 100,
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.all(1),
+        margin: const EdgeInsets.symmetric(vertical: 3),
         decoration: BoxDecoration(
             color: ColorTheme.lightPurple.withOpacity(0.3),
             borderRadius: BorderRadius.circular(10)),
